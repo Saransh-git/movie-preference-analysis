@@ -7,7 +7,7 @@ The survey data used in the report contained a wide range of questions, hence we
  
 All the steps performed in this project can be implemented for extracting similar information about liking of other movie genres such as Sci-fi, Action, War, Comedy, etc.
 
-##Introduction/ Recognition and Statement of the problem
+## Introduction/ Recognition and Statement of the problem
 Today, with increasing trend and popularity in online streaming services such as Netflix, Disney Plus, Amazon Prime , etc. everyone can choose and watch movies and serials of their own preferred genre. 
 One of the movie or serial genre is Horror, but we all know it is not everyone’s favourite. When we are sitting in a group of friends there might be always someone who hate horror movies and other who might have finished watching all the released ones. This contrast liking of horror makes us sometimes wonder do people of certain interest hate horror movies. Hence, we thought to explore personality traits, phobias, music preferences and hobbies and Interests to find explainability towards liking of horror movies. 
 
@@ -16,14 +16,14 @@ Factor screening: Identify the factors which most influence the affinity towards
 Optimization: If we are hosting a movie party and we are planning on screening a Horror, then we need to be sure about who to invite and who not to invite so as to not make anyone uncomfortable in the party. 
 Generalization: The same experimental design can be extended over to learn the affinity towards other genres such as Comedies, Sci-fis, Actions, Thrillers etc.
 
-##Design of Experiment
+## Design of Experiment
 
-###Selection of the response variable
+### Selection of the response variable
 
 Given we are targeting the affinity towards Horrors, the response variable was chosen on a 5 way likert scale ranging from Strongly Disagree (1), Disagree (2), Neutral (3), Agree(4), Strongly Agree (5). Respondents were asked whether they enjoy watching Horror movies or not. The choice of a 5-way likert scale was to ease the collection of responses from respondents, as it becomes subjective and difficult if someone has to score their affinity on a continuous scale.
 Choice of factors, levels and range
 
-###Design factors
+### Design factors
 
 - Likes Music - This tells how much participant enjoys listening to music with 1 being enjoys least.
 - Slow songs or fast songs- This tells whether the person prefer slow paced music(1) or fast paced music(5)
@@ -47,11 +47,11 @@ Choice of factors, levels and range
 - Entertainment spending - This variable shows how much money is spent on partying and socializing with 5 being spends a lot. 
 - Age - This tells about the age of participants.
  
-###Allowed to vary factors
+### Allowed to vary factors
 
 Alongside the design factors considered for the experiment, data was also collected for several other traits demonstrating Music preferences, Hobbies, Interests, Health habits, views on life, opinions and spending habits. As we were focused on what could possibly impact the affinity towards watching Horrors, we considered the design factors as mentioned above only for the analysis and left the others to vary across the respondents (treatment units).
 
-###Nuisance factors
+### Nuisance factors
 
 While we are interested in finding the most influencing factors, there can be variations in our analysis based on whether respondents like to watch movies overall or not. A respondent who is overall less likely to watch any sort of movie would also refrain from watching Horror. 
 
@@ -60,11 +60,11 @@ Uncontrollable factors not accounted
 
 Other traits as we know there are many besides what we have considered in our experimental design. Also, that bringing in factors based on regions, genders etc. brings in subjectivity to the problem and such kind of factors are not accounted and deemed uncontrollable.
 
-###Choice of experimental design
+### Choice of experimental design
 
 Given the first objective to our problem of screening influential factors, we restrict the levels/ treatments of factors to two levels each as described in Design factors. Also, given the presence of blocked variable in the form of watch movies or not, we have a blocking variable. Therefore, we initially deploy a fixed effects model to capture the main and interaction effects with a randomized block design. We are only considering the second order model and ignoring all the interaction effects involving more than two variables. This choice was made due to the presence of a lot of variables (~ 20 design factors),  considering all the possible effects would have taken an enormous amount of time to execute. Please refer to Appendix to see the full model considered.
 
-##Data
+## Data
 
 We had such a data available from a public survey where the 1,010 respondents in the age group of 15-30 were asked to have a survey on several items covering the following traits:
 Music Preferences (19 traits)
@@ -81,8 +81,8 @@ As mentioned in Choice of factors, levels and range, we selected the 20 design f
 Following are the results as obtained from survey against the 20 design factors on a scale of 1 (Strongly Disagree) to 5 (Strongly Agree).
 
 
-##Analysis and Results
-###Models
+## Analysis and Results
+### Models
 
 We ran the full model as described in Full Model. Below is the plot as obtained with Half-normal probability plot on effects obtained from the Full Model.
 
@@ -108,16 +108,16 @@ darkness:spiders
 We fit the reduced model as obtained from the above analysis (described at Reduced Model 1). We further performed ANOVA analysis to find the significant factors at 95% significance and reduced our model further to Reduced Model 2.
 
 
-##Conclusions
+## Conclusions
 
-###Final Conclusions 
+### Final Conclusions 
 - We concluded interesting results that the people who are of more age in the interval of 15-30 years, who spend more on entertainment, like socializing with friends and listen to fast pace music, while less happy with their lives, less interest in theatre and have no phobia of darkness and snakes prefer to watch more horror movies. 
 
-###Future Work
+### Future Work
  - Firstly, in this project we worked only with horror movie preferences, using the same data all the steps could be repeated to find out the interests, traits and phobia of leading to interest in other genres of movies such as sci-fi, comedy, war, action, etc.
 - For moving ahead with same problem statement to incorporate even better model we learnt from our residual plot analysis that ordinal regression can be performed in the future. As, it might be more suitable for the ordinal survey data we are dealing with in this project.
 
-##References
+## References
 - Parallel straight Lines on Residuals vs. Predicted Values Plot ...." 28 Jun. 2017, https://stats.stackexchange.com/questions/287669/parallel-straight-lines-on-residuals-vs-predicted-values-plot. Accessed 1 Dec. 2019.
 - "Douglas C. Montgomery-Design and Analysis of Experiments ...." http://faculty.business.utsa.edu/manderso/STA4723/readings/Douglas-C.-Montgomery-Design-and-Analysis-of-Experiments-Wiley-2012.pdf. Accessed 1 Dec. 2019.
 - MATH 567 - Design and Analysis of Experiments, Illinois Institute of Technology
