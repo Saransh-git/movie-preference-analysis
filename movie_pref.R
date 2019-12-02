@@ -96,8 +96,6 @@ ggplot() + geom_bar(mapping=aes(ques_list, group=responses, fill=responses)) + s
 ############################# Data Preparation ###############################
 prepd_data <- data_horror %>%  mutate(like_music =if_else(like_music < 5, -1, 1))
 prepd_data <- prepd_data %>%  mutate(slow_fast_music =if_else(slow_fast_music< 4, -1, 1))
-#prepd_data <- prepd_data %>%  mutate(Movies =if_else(Movies< 5, -1, 1))
-#prepd_data <- prepd_data %>%  mutate(Horror  =if_else(Horror < 3, -1, 1))
 prepd_data <- prepd_data %>%  mutate(psychology =if_else(psychology < 4, -1, 1))
 prepd_data <- prepd_data %>%  mutate(politics =if_else(politics < 3, -1, 1))
 prepd_data <- prepd_data %>%  mutate(physics =if_else( physics< 2, -1, 1))
@@ -209,7 +207,6 @@ fit = lm(horror ~ like_music*slow_fast_music + like_music*psychology + like_musi
          ,data=prepd_data
 ) 
 
-
 ########################### Half Normal Plot #################################
 library(unrepx)
 hnplot(fit$effects, ID=TRUE)
@@ -232,12 +229,111 @@ fit_sig = lm(horror~slow_fast_music+
              history*rats+
              darkness*snakes+
              darkness*spiders , data=prepd_data)
+anova(fit_sig)
 
+fit_reduce = lm(horror~slow_fast_music +  
+                theatre+
+                fun_with_friends +
+                snakes +
+                happy_life +
+                entertainment_spend +
+                age+
+                watch_movies+
+                entertainment_spend*sci_and_tech  +    
+                darkness*spiders, data=prepd_data )
+ 
 ##################################### Residual Analysis #####################################
-res = resid(fit_sig)
+
+res = resid(fit_reduce)
 ggplot() + geom_qq(mapping=aes(sample=res)) + geom_qq_line(mapping=aes(sample=res)) + labs(title="QQ plot")
 
-
+pred =predict(fit_reduce)
 ggplot() + geom_point(mapping = aes(pred, res)) + 
-  xlab("Predicted values") + ylab("Residuals") + ggtitle("residuals vs predicted values")
-contour(new$temp, new$time, outer(pred, pred), xlab="temperature", ylab="time", main="molecular weight")
+  xlab("Predicted values") + ylab("Residuals") + ggtitle("Residuals vs Predicted values")
+
+ggplot(data = prepd_data) + geom_point(mapping = aes(slow_fast_music, res)) + 
+  xlab("Slow or Fast Music") + ylab("Residuals") + ggtitle("Residuals vs slow_fast_music")
+
+ggplot(data = prepd_data) + geom_point(mapping = aes(theatre, res)) + 
+  xlab("Theatre") + ylab("Residuals") + ggtitle("Residuals vs Theatre")
+
+ggplot(data = prepd_data) + geom_point(mapping = aes(fun_with_friends, res)) + 
+  xlab("fun_with_friends") + ylab("Residuals") + ggtitle("Residuals vs fun_with_friends")
+ggplot(data = prepd_data) + geom_point(mapping = aes(snakes, res)) + 
+  xlab("snakes") + ylab("Residuals") + ggtitle("Residuals vs snakes")
+ggplot(data = prepd_data) + geom_point(mapping = aes(happy_life, res)) + 
+  xlab("happy_life") + ylab("Residuals") + ggtitle("Residuals vs happy_life")
+
+ggplot(data = prepd_data) + geom_point(mapping = aes(entertainment_spend , res)) + 
+  xlab("entertainment_spend ") + ylab("Residuals") + ggtitle("Residuals vs entertainment_spend ")
+
+ggplot(data = prepd_data) + geom_point(mapping = aes(watch_movies , res)) + 
+  xlab("watch_movies") + ylab("Residuals") + ggtitle("Residuals vs watch_movies")
+
+ggplot(data = prepd_data) + geom_point(mapping = aes(age, res)) + 
+  xlab("age ") + ylab("Residuals") + ggtitle("Residuals vs age ")
+
+ggplot(data = prepd_data) + geom_point(mapping = aes(sci_and_tech, res)) + 
+  xlab("sci_and_tech") + ylab("Residuals") + ggtitle("Residuals vs sci_and_tech")
+ggplot(data = prepd_data) + geom_point(mapping = aes(darkness , res)) + 
+  xlab("darkness") + ylab("Residuals") + ggtitle("Residuals vs darkness")
+
+ggplot(data = prepd_data) + geom_point(mapping = aes(spiders , res)) + 
+  xlab("spiders") + ylab("Residuals") + ggtitle("Residuals vs spiders")
+
+##################################### Main Effect Plots ############################################
+library(gplots)
+plotmeans(prepd_data$horror~prepd_data$slow_fast_music, xlab='Slow Fast Music', ylab='Horror Movies Affinity', main='Main effect plot of Slow and Fast Music', barcol=F)
+plotmeans(prepd_data$horror~prepd_data$theatre, xlab='Theatre', ylab='Horror Movies Affinity', main='Main effect plot of Theatre', barcol=F)
+plotmeans(prepd_data$horror~prepd_data$fun_with_friends, xlab='Fun with Friends', ylab='Horror Movies Affinity', main='Main effect plot of socializing', barcol=F)
+plotmeans(prepd_data$horror~prepd_data$snakes, xlab='Snakes phobia', ylab='Horror Movies Affinity', main='Main effect plot of snakes phobia', barcol=F)
+plotmeans(prepd_data$horror~prepd_data$happy_life, xlab='Happy with life', ylab='Horror Movies Affinity', main='Main effect plot Happiness in life', barcol=F)
+plotmeans(prepd_data$horror~prepd_data$entertainment_spend, xlab='Entertainment Expenditure', ylab='Horror Movies Affinity', main='Main effect plot of entertainment expenditure', barcol=F)
+plotmeans(prepd_data$horror~prepd_data$age, xlab='Age', ylab='Horror Movies Affinity', main='Main effect plot of age', barcol=F)
+
+##################################### Interaction Analysis ############################
+interaction.plot(prepd_data$entertainment_spend,prepd_data$sci_and_tech,response=prepd_data$horror)
+interaction.plot(prepd_data$darkness,prepd_data$spiders,response=prepd_data$horror)
+
+##################################### Counter Plot ############################
+slow_fast_music = seq(1,5, length.out = 20)
+theatre = seq(1,5, length.out = 20)
+fun_with_friends = seq(1,5, length.out = 20)
+snakes = seq(1, 5, length.out = 20)
+happy_life = seq(1, 5, length.out = 20)
+entertainment_spend = seq(1, 5, length.out = 20)
+age = seq(15, 30, length.out = 20)
+sci_and_tech = seq(1, 5, length.out = 20)
+darkness = seq(1, 5, length.out = 20)
+spiders = seq(1, 5, length.out = 20)
+entertainment_spend = seq(1, 5, length.out = 20)
+new = data.frame(
+  slow_fast_music=slow_fast_music, theatre=theatre, fun_with_friends=fun_with_friends, 
+  snakes=snakes, happy_life=happy_life, entertainment_spend=entertainment_spend, age=age, 
+  darkness=darkness, spiders=spiders, sci_and_tech=sci_and_tech
+)
+data_block_5 = prepd_data %>% filter(watch_movies == 5)
+data_block_5$slow_fast_music = as.integer(data_block_5$slow_fast_music)
+data_block_5$theatre = as.integer(data_block_5$theatre)
+data_block_5$fun_with_friends = as.integer(data_block_5$fun_with_friends)
+data_block_5$snakes = as.integer(data_block_5$snakes)
+data_block_5$happy_life = as.integer(data_block_5$happy_life)
+data_block_5$entertainment_spend = as.integer(data_block_5$entertainment_spend)
+data_block_5$age = as.integer(data_block_5$age)
+data_block_5$darkness = as.integer(data_block_5$darkness)
+data_block_5$spiders = as.integer(data_block_5$spiders)
+data_block_5$sci_and_tech = as.integer(data_block_5$sci_and_tech)
+fit_block_5 = lm(horror~slow_fast_music +  
+                   theatre+
+                   fun_with_friends +
+                   snakes +
+                   happy_life +
+                   entertainment_spend +
+                   age+
+                   entertainment_spend*sci_and_tech  +    
+                   darkness*spiders, data=data_block_5 )
+pred = predict(fit_block_5, new)
+contour(new$slow_fast_music, new$fun_with_friends, sqrt(outer(pred, pred)), xlab="Slow and Fast music", ylab="Fun with Friends", main="Affinity to Horror movies")
+contour(new$entertainment_spend, new$fun_with_friends, sqrt(outer(pred, pred)), xlab="Entertainment Expenditure", ylab="Fun with friends", main="Affinity to Horror movies")
+
+
