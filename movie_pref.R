@@ -117,8 +117,127 @@ prepd_data <- prepd_data %>%  mutate( entertainment_spend=if_else(entertainment_
 prepd_data <- prepd_data %>%  mutate(internet_usage =if_else( internet_usage == "few hours a day", -1, 1))
 prepd_data <- prepd_data %>%  mutate(age=if_else(age< 20, -1, 1))
 
+############################# Change to factors ###############################
+prepd_data$like_music  = as.factor(prepd_data$like_music)
+prepd_data$slow_fast_music  = as.factor(prepd_data$slow_fast_music)
+prepd_data$psychology  = as.factor(prepd_data$psychology)
+prepd_data$politics  = as.factor(prepd_data$politics)
+prepd_data$physics  = as.factor(prepd_data$physics)
+prepd_data$sci_and_tech  = as.factor(prepd_data$sci_and_tech)
+prepd_data$theatre  = as.factor(prepd_data$theatre)
+prepd_data$history  = as.factor(prepd_data$history)
+prepd_data$fun_with_friends  = as.factor(prepd_data$fun_with_friends)
+prepd_data$darkness  = as.factor(prepd_data$darkness)
+prepd_data$snakes  = as.factor(prepd_data$snakes)
+prepd_data$spiders  = as.factor(prepd_data$spiders)
+prepd_data$rats  = as.factor(prepd_data$rats)
+prepd_data$work_in_spare_time  = as.factor(prepd_data$work_in_spare_time)
+prepd_data$funny  = as.factor(prepd_data$funny)
+prepd_data$happy_life  = as.factor(prepd_data$happy_life)
+prepd_data$internet_usage  = as.factor(prepd_data$internet_usage)
+prepd_data$finances  = as.factor(prepd_data$finances)
+prepd_data$entertainment_spend  = as.factor(prepd_data$entertainment_spend)
+prepd_data$age  = as.factor(prepd_data$age)
+
+########################### Regression Model #################################
+
+"fit = lm(horror~like_music*slow_fast_music*psychology*politics*physics*
+         sci_and_tech*theatre*history*
+         fun_with_friends*darkness*snakes*spiders*rats*
+         work_in_spare_time*funny*happy_life*internet_usage*
+         finances*entertainment_spend*age, data=data_horror)
+anova(fit)
+"
+
+fit = lm(horror ~ like_music*slow_fast_music + like_music*psychology + like_music*politics
+         + like_music*physics + like_music*sci_and_tech + like_music*theatre + like_music*history
+         + like_music*fun_with_friends + like_music*darkness + like_music*snakes + like_music*spiders
+         + like_music*rats + like_music*work_in_spare_time + like_music*funny + like_music*happy_life
+         + like_music*internet_usage + like_music*finances + like_music*entertainment_spend
+         + like_music*age + slow_fast_music*psychology* + slow_fast_music*politics+slow_fast_music*physics +
+           slow_fast_music*sci_and_tech+slow_fast_music*theatre+slow_fast_music*history+
+           slow_fast_music*fun_with_friends+slow_fast_music*darkness+slow_fast_music*snakes+slow_fast_music*spiders+slow_fast_music*rats+slow_fast_music*
+           work_in_spare_time+slow_fast_music*funny+slow_fast_music*happy_life+slow_fast_music*internet_usage+slow_fast_music
+         *finances+slow_fast_music*entertainment_spend+slow_fast_music*age
+         + psychology*politics + psychology*physics + psychology*sci_and_tech + psychology*theatre
+         + psychology*history + psychology*fun_with_friends + psychology*darkness + psychology*snakes
+         + psychology*spiders + psychology*rats + psychology*work_in_spare_time + psychology*funny
+         + psychology*happy_life + psychology*internet_usage + psychology*finances
+         + psychology*entertainment_spend + psychology*age + politics*physics +
+           politics*sci_and_tech+politics*theatre+politics*history+
+           politics*fun_with_friends+politics*darkness+
+           politics*snakes+politics*spiders+
+           politics*rats+politics*
+           work_in_spare_time+politics*funny+politics*happy_life+politics*internet_usage+politics
+         *finances+politics*entertainment_spend+politics*age + physics*sci_and_tech+physics*theatre+physics*history+
+           physics*fun_with_friends+physics*darkness+
+           physics*snakes+physics*spiders+
+           physics*rats+physics*
+           work_in_spare_time+physics*funny+physics*happy_life+physics*internet_usage+physics
+         *finances+physics*entertainment_spend+physics*age + sci_and_tech*theatre+sci_and_tech*history+
+           sci_and_tech*fun_with_friends+sci_and_tech*darkness+
+           sci_and_tech*snakes+sci_and_tech*spiders+
+           sci_and_tech*rats+sci_and_tech*
+           work_in_spare_time+sci_and_tech*funny+sci_and_tech*happy_life+sci_and_tech*internet_usage+sci_and_tech
+         *finances+sci_and_tech*entertainment_spend+sci_and_tech*age + theatre*history+
+           theatre*fun_with_friends+theatre*darkness+
+           theatre*snakes+theatre*spiders+
+           theatre*rats+theatre*
+           work_in_spare_time+theatre*funny+theatre*happy_life+theatre*internet_usage+theatre
+         *finances+theatre*entertainment_spend+theatre*age + history*fun_with_friends+history*darkness+
+           history*snakes+history*spiders+
+           history*rats+history*
+           work_in_spare_time+history*funny+history*happy_life+history*internet_usage+history
+         *finances+history*entertainment_spend+history*age + fun_with_friends*darkness + fun_with_friends*snakes + fun_with_friends*spiders + fun_with_friends*rats
+         + fun_with_friends*work_in_spare_time + fun_with_friends*funny + fun_with_friends*happy_life
+         + fun_with_friends*internet_usage + fun_with_friends*finances + fun_with_friends*entertainment_spend
+         + fun_with_friends*age + darkness*snakes+darkness*spiders+
+           darkness*rats+darkness*
+           work_in_spare_time+darkness*funny+darkness*happy_life+darkness*internet_usage+darkness
+         *finances+darkness*entertainment_spend+darkness*age + snakes*spiders+
+           snakes*rats+snakes*
+           work_in_spare_time+snakes*funny+snakes*happy_life+snakes*internet_usage+snakes
+         *finances+snakes*entertainment_spend+snakes*age + spiders*rats+spiders*
+           work_in_spare_time+spiders*funny+spiders*happy_life+spiders*internet_usage+spiders
+         *finances+spiders*entertainment_spend+spiders*age + rats*work_in_spare_time+rats*funny+rats*happy_life+rats*internet_usage+rats
+         *finances+rats*entertainment_spend+rats*age + work_in_spare_time*funny+work_in_spare_time*happy_life+work_in_spare_time*internet_usage+work_in_spare_time
+         *finances+work_in_spare_time*entertainment_spend+work_in_spare_time*age + funny*happy_life+funny*internet_usage+funny
+         *finances+funny*entertainment_spend+funny*age + happy_life*internet_usage+happy_life
+         *finances+happy_life*entertainment_spend+happy_life*age +
+           internet_usage*finances+internet_usage*entertainment_spend+internet_usage*age
+         + finances*entertainment_spend+finances*age + entertainment_spend*age + watch_movies
+         ,data=prepd_data
+) 
 
 
+########################### Half Normal Plot #################################
+library(unrepx)
+hnplot(fit$effects, ID=TRUE)
+
+########################### Model with Significant Factors #################################
+fit_sig = lm(horror~slow_fast_music+
+             theatre+
+             fun_with_friends+
+             snakes+
+             happy_life+
+             entertainment_spend+
+             age+
+             watch_movies+
+             like_music*history+
+             slow_fast_music:psychology+
+             slow_fast_music*entertainment_spend+
+             politics*age+
+             sci_and_tech*finances+
+             sci_and_tech*entertainment_spend+
+             history*rats+
+             darkness*snakes+
+             darkness*spiders , data=prepd_data)
+
+##################################### Residual Analysis #####################################
+res = resid(fit_sig)
+ggplot() + geom_qq(mapping=aes(sample=res)) + geom_qq_line(mapping=aes(sample=res)) + labs(title="QQ plot")
 
 
-
+ggplot() + geom_point(mapping = aes(pred, res)) + 
+  xlab("Predicted values") + ylab("Residuals") + ggtitle("residuals vs predicted values")
+contour(new$temp, new$time, outer(pred, pred), xlab="temperature", ylab="time", main="molecular weight")
