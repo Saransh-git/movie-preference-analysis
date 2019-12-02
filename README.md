@@ -1,6 +1,6 @@
 # Predicting Movie Preferences from Personality Traits and Interests
 
-- Note: Refer to the complete report for detailed analysis. 
+## Note: Refer to the complete report for detailed analysis. 
 In this project, we tried to create experimental design such that we find factors of personality traits, interests, phobia and music preferences that influence the choice of horror movie/serial genre among people.
 
 The survey data used in the report contained a wide range of questions, hence we first performed factor screening and then carried out various data analysis such as residual analysis, interaction effect exploration. This helped us to achieve useful results of common personality traits and interests which overlap with liking of Horror genre.
